@@ -18,25 +18,6 @@ namespace ExcelReaderCoreWeb.Controllers
             return View();
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
         [HttpPost]
         public IActionResult ReadFile()
         {
@@ -105,12 +86,5 @@ namespace ExcelReaderCoreWeb.Controllers
         {
             if (Value.GetType() != DataType) errorList.Add(new ErrorListModel { Column = Column, Row = count, Message = $"Value is not of type ({DataType})" });
         }
-    }
-
-    public class ErrorListModel
-    {
-        public int Column { get; set; }
-        public int Row { get; set; }
-        public string Message { get; set; }
     }
 }

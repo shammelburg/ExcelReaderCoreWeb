@@ -2,10 +2,10 @@ using System;
 
 namespace ExcelReaderCoreWeb.Models
 {
-    public class ErrorViewModel
+    public class ErrorListModel
     {
-        public string RequestId { get; set; }
-
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        public int Column { get; set; }
+        public int Row { get; set; }
+        public string Message { get; set; }
     }
 }

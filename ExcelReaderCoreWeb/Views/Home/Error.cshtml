@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ExcelReaderCoreWeb.Models.ErrorListModel>
+
+<div class="jumbotron" style="color:white; background-color:red;">
+    <h1>Error</h1>
+    <p>Excel Document is invalid!</p>
+    <p><a class="btn btn-default btn-lg" href="/" role="button">Try Again!!</a></p>
+</div>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Row)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Column)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Message)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Exception)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Row)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Column)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Exception)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

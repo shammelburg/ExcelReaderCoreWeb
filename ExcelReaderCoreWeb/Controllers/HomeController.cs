@@ -63,7 +63,7 @@ namespace ExcelReaderCoreWeb.Controllers
                                 var Column1 = excelReader.GetString(0).ToString();
 
                                 columnNumber = 2;
-                                var Column2 = excelReader.GetString(1);
+                                var Column2 = excelReader.GetString(1).ToString();
 
                                 columnNumber = 3;
                                 var Column3 = excelReader.GetDouble(2);
@@ -79,6 +79,10 @@ namespace ExcelReaderCoreWeb.Controllers
                                 // Using a UDT or XML
 
                                 list.Add(new { c1 = Column1, c2 = Column2, c3 = Column3, c4 = Column4 });
+                            }
+                            catch (NullReferenceException ex)
+                            {
+                                errorList.Add(new ErrorListModel { Column = columnNumber, Row = row, Message = $"No Data Found", Exception = ex.Message });
                             }
                             catch (Exception ex)
                             {

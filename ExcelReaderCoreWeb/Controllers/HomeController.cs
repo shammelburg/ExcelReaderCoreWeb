@@ -18,14 +18,24 @@ namespace ExcelReaderCoreWeb.Controllers
             return View();
         }
 
+        public IActionResult Error()
+        {
+            return View();
+        }
+
+        public IActionResult Success()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult ReadFile()
         {
             var files = Request.Form.Files;
 
-            int count = 1, totalRows = 0;
+            int row = 1, totalRows = 0;
             var errorList = new List<ErrorListModel>();
-
+            var list = new List<Object>();
 
             for (int i = 0; i < files.Count; i++)
             {
@@ -41,35 +51,46 @@ namespace ExcelReaderCoreWeb.Controllers
 
                     while (excelReader.Read())
                     {
+                        int columnNumber = 0;
+
                         if (firstRow)
                         {
                             totalRows++;
-
+                            
                             try
                             {
-                                var Column1 = excelReader.GetValue(0);
-                                CheckDataType(count, errorList, Column1, typeof(string), 1);
+                                columnNumber = 1;
+                                var Column1 = excelReader.GetString(0).ToString();
 
-                                var Column2 = excelReader.GetValue(1);
-                                CheckDataType(count, errorList, Column2, typeof(string), 2);
+                                columnNumber = 2;
+                                var Column2 = excelReader.GetString(1);
 
-                                var Column3 = excelReader.GetValue(2);
-                                CheckDataType(count, errorList, Column3, typeof(string), 3);
+                                columnNumber = 3;
+                                var Column3 = excelReader.GetDouble(2);
 
-                                var Column4 = excelReader.GetValue(3);
-                                // no type checking
+                                columnNumber = 4;
+                                var Column4 = excelReader.GetBoolean(3);
+
+
+                                // Run db command here...
+                                // Not recommended for a huge collection
+                                // Or
+                                // Create another collection and submit that to the db
+                                // Using a UDT or XML
+
+                                list.Add(new { c1 = Column1, c2 = Column2, c3 = Column3, c4 = Column4 });
                             }
                             catch (Exception ex)
                             {
-                                // Catch general exception...
+                                errorList.Add(new ErrorListModel { Column = columnNumber, Row = row, Message = $"Incorrect Data Type", Exception = ex.Message });
                             }
-
-                            count++;
                         }
                         else
                         {
                             firstRow = true;
                         }
+
+                        row++;
                     }
 
                     excelReader.Close();
@@ -77,14 +98,9 @@ namespace ExcelReaderCoreWeb.Controllers
             }
 
             if (errorList.Count > 0)
-                return Ok(errorList);
-            else
-                return Ok($"Processed {count} / {totalRows} rows from file.");
-        }
+                return View("Error", errorList);
 
-        private static void CheckDataType(int count, List<ErrorListModel> errorList, object Value, dynamic DataType, int Column)
-        {
-            if (Value.GetType() != DataType) errorList.Add(new ErrorListModel { Column = Column, Row = count, Message = $"Value is not of type ({DataType})" });
+            return View("Success", list);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace ExcelReaderCoreWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Added manually to enable file reading
+            // Added manually to enable file reading 
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
             services.AddMvc();
@@ -34,6 +34,10 @@ namespace ExcelReaderCoreWeb
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseStaticFiles();

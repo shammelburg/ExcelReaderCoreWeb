@@ -7,5 +7,6 @@ namespace ExcelReaderCoreWeb.Models
         public int Column { get; set; }
         public int Row { get; set; }
         public string Message { get; set; }
+        public string Exception { get; set; }
     }
 }

@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<ExcelReaderCoreWeb.Models.ErrorListModel>
 
+@{
+    ViewData["Title"] = "Error";
+}
+
 <div class="jumbotron" style="color:white; background-color:red;">
     <h1>Error</h1>
     <p>Excel Document is invalid!</p>
@@ -23,21 +27,22 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Row)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Column)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Message)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Exception)
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Row)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Column)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Message)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Exception)
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
